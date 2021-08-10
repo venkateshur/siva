@@ -27,3 +27,11 @@ def excel_reader(path, all_sheets, header, specific_sheet):
 
 def text_reader(path, delimiter):
     return pd.read_csv(path, header=None, delimiter=delimiter)
+
+
+def xml_reader(path, xpath="./*"):
+    return pd.read_xml(path, xpath=xpath)
+
+
+def json_reader(path):
+    return pd.read_json(path)
