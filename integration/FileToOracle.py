@@ -7,14 +7,14 @@ from model.processor import MainProcessor
 from model.write.writer import load_into_oracle
 
 if __name__ == "__main__":
-    print("Data Integrator App")
+    print("Loading file to oracle App")
 
 logger = logging.getLogger("Data integrator")
 logger.setLevel(logging.INFO)
 
 current_timestamp = str(datetime.now())
-logging.info('Data integrator - Started @: ' + current_timestamp)
-print('Data integrator - Started @: ' + current_timestamp)
+logging.info('Loading file to oracle - Started @: ' + current_timestamp)
+print('Loading file to oracle - Started @: ' + current_timestamp)
 
 try:
     config = load_app_config(sys.argv[1])
@@ -26,6 +26,6 @@ try:
         load_into_oracle(data, config.output_conf.oracle_conf)
 
 except Exception as e:
-    logger.error("Data Integrator Failed with Error:" + str(e))
-    print("Data Integrator Failed with Error: {0}".format(str(e)))
+    logger.error("Loading file to oracle Failed with Error:" + str(e))
+    print("Loading file to oracle Failed with Error: {0}".format(str(e)))
     raise e
