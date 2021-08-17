@@ -8,6 +8,7 @@ from model.write.writer import text_writer
 
 
 def main_processor(app_conf):
+    data = None
     if app_conf.input_conf.source == "SHAREPOINT":
         response = down_file_from_share_point(app_conf.input_conf.sharepoint_conf.url,
                                               app_conf.input_conf.sharepoint_conf.file,
@@ -39,6 +40,25 @@ def main_processor(app_conf):
 
         else:
             raise Exception("Sharepoint download failed: " + str(response))
+    elif app_conf.input_conf.source == "CSV":
+        data = csv_processor(app_conf.input_conf.input_temp_path,
+                             app_conf.input_conf.sharepoint_conf.fields,
+                             app_conf.input_conf.sharepoint_conf.delimiter,
+                             app_conf.input_conf.sharepoint_conf.header)
+        return data
+
+    elif app_conf.input_conf.source == "EXCEL":
+        data = excel_processor(app_conf.input_conf.input_temp_path,
+                               app_conf.input_conf.sharepoint_conf.all_sheets_required,
+                               app_conf.input_conf.sharepoint_conf.required_sheets,
+                               app_conf.input_conf.sharepoint_conf.header)
+        return data
+
+    elif app_conf.input_conf.source == "TEXT":
+        data = text_processor(app_conf.input_conf.input_temp_path,
+                              app_conf.input_conf.sharepoint_conf.delimiter)
+        return data
+
     else:
         raise Exception("Invalid Input Source Type")
 
@@ -59,8 +79,8 @@ def text_processor(path, delimiter):
 
 
 def excel_to_csv_processor(input_conf, output_file_conf):
-    file_name = str(Path(input_conf.path).name).split("\\.")[0]
-    df = excel_processor(input_conf.path,
+    file_name = str(Path(input_conf.source_folder).name).split("\\.")[0]
+    df = excel_processor(input_conf.source_folder,
                          input_conf.all_sheets_required,
                          input_conf.required_sheets,
                          input_conf.header)
@@ -68,8 +88,8 @@ def excel_to_csv_processor(input_conf, output_file_conf):
 
 
 def excel_to_text_processor(input_conf, output_file_conf):
-    file_name = str(Path(input_conf.path).name).split("\\.")[0]
-    df = excel_processor(input_conf.path,
+    file_name = str(Path(input_conf.source_folder).name).split("\\.")[0]
+    df = excel_processor(input_conf.source_folder,
                          input_conf.all_sheets_required,
                          input_conf.required_sheets,
                          input_conf.header)
