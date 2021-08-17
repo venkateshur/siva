@@ -1,5 +1,7 @@
 import pandas as pd
 import sharepy
+import pandas as pd
+import cx_Oracle
 
 
 def down_file_from_share_point(url, file, temp_file_path, user_name, password):
@@ -12,7 +14,6 @@ def csv_reader(path, fields, delimiter, header):
         csv_input = pd.read_csv(path, delimiter, header=header)
     else:
         csv_input = pd.read_csv(path, delimiter, header=header, usecols=fields)
-
     return csv_input
 
 
@@ -21,7 +22,6 @@ def excel_reader(path, all_sheets, header, specific_sheet):
         excel_input = pd.read_excel(path, sheet_name=all_sheets, header=header)
     else:
         excel_input = pd.read_excel(path, sheet_name=specific_sheet, header=header)
-
     return excel_input
 
 
@@ -35,3 +35,16 @@ def xml_reader(path, xpath="./*"):
 
 def json_reader(path):
     return pd.read_json(path)
+
+
+def read_from_oracle_query(oracle_conf, sql=None):
+    if sql is None and oracle_conf.table_name is not None:
+        sql = "SELECT * FROM " + oracle_conf.table_name
+    try:
+        with cx_Oracle.connect(oracle_conf.user_name, oracle_conf.password,
+                               oracle_conf.host + ":" + oracle_conf.port + "/" + oracle_conf.service_name, encoding="UTF-8") as connection:
+            dataframe = pd.read_sql(sql, con=connection)
+        return dataframe
+    except cx_Oracle.Error as error:
+        print(error)
+        raise error
