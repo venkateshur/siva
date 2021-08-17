@@ -69,7 +69,9 @@ def load_conf(config):
                                     config['port'],
                                     config['user'],
                                     config['password'],
-                                    config['path'])
+                                    config['source_path'],
+                                    config['target_path'],
+                                    config['file_name'])
 
     output_conf = OutputConf(target, oracle_conf, output_file_conf, file_share_conf)
 
