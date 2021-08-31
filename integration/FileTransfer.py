@@ -3,7 +3,6 @@ import sys
 from datetime import datetime
 
 from model.processor import FileTransferProcessor
-from util.ConfigLoader import load_app_config
 
 if __name__ == "__main__":
     print("File Transfer App")
@@ -16,20 +15,27 @@ logging.info('File Transfer - Started @: ' + current_timestamp)
 print('File Transfer - Started @: ' + current_timestamp)
 
 try:
-    file_transfer_config = load_app_config(sys.argv[1], "file-transfer")
-    if file_transfer_config.source_system == "UNIX" and file_transfer_config.target_system == "WINDOWS":
-        FileTransferProcessor.unix_transfer(file_transfer_config.unix_conf.file_path,
-                                            file_transfer_config.unix_conf.cert_directory,
-                                            file_transfer_config.unix_conf.cert_name,
-                                            file_transfer_config.unix_conf.cert_password,
-                                            file_transfer_config.windows_conf.direcotry)
+    source_system = sys.argv[1]
+    target_system = sys.argv[2]
+    files_path = sys.argv[3]
+    cert_directory = sys.argv[4]
+    cert_name = sys.argv[5]
+    cert_password = sys.argv[6]
+    target_directory = sys.argv[7]
 
-    elif file_transfer_config.source_system == "WINDOWS" and file_transfer_config.target_system == "UNIX":
-        FileTransferProcessor.windows_transfer(file_transfer_config.unix_conf.file_path,
-                                               file_transfer_config.unix_conf.cert_directory,
-                                               file_transfer_config.unix_conf.cert_name,
-                                               file_transfer_config.unix_conf.cert_password,
-                                               file_transfer_config.windows_conf.direcotry)
+    if source_system == "UNIX" and target_system == "WINDOWS":
+        FileTransferProcessor.unix_transfer(files_path,
+                                            cert_directory,
+                                            cert_name,
+                                            cert_password,
+                                            target_directory)
+
+    elif source_system == "WINDOWS" and target_system == "UNIX":
+        FileTransferProcessor.unix_transfer(files_path,
+                                            cert_directory,
+                                            cert_name,
+                                            cert_password,
+                                            target_directory)
     else:
         raise Exception("Invalid Target System, Supported System are UNIX and WINDOWS")
 
