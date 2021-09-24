@@ -25,6 +25,14 @@ So that one configuration will serve all the feaures. The users just update conf
 for file transfer, oracle file load/unload/ rest api, file conversion etc.
 But after our multiple code walkthroughs, the entire code required to be changed. Which causes some delay due to repeated testing.
 
-In summary the challanges I faced due to connections to various entities, which makes delay to deliver the tasks.
+File transfer, Oracle Integration and File conversion all are working my laptop. But when I tested on dev server, getting issues with python packages.
+Actually for my user login the python version showing 2.7, if i use sudo cdpew the python version is 3.6 and all packages also avilable.
+But I can not copy the files to the directories created with sudo user and not able access files created with my login. 
+
+I am not sure why two different python versions for different users.
+
+In summary the challanges I faced due to connections to various entities, python versions and missing some packages(no permission for installations) which makes delay to deliver the tasks.
+
+
 
  
