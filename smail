@@ -1,0 +1,30 @@
+Hi Pradeep,
+
+Coding is done as per the estimation. The issues sharepoint and file transfer modules.
+
+sharepoint:
+Our sharepoint don't have access to communicate through programmes. Due to security configuration we are not able establish connection to share point
+I tried various approaches using python packages like sharepy, office365 rest client and requests for connections nothing worked as we are getting certification errors
+As we implmented client id and secrets for the new share point i am testing using these credetials.
+
+Transfer:
+I am not aware of the access configuration to our unix servers, I thought it would be ssh. Tried ssh, scp and lftp(as per your suggestions) but nothing worked
+After you provided pfx certifactes and passwords it's working. Now we can transfer files to unix.
+But unix to sahredrive, without mounting we can not transfer, tried scp, sftp and ftp also nothign worked. Tried mounting the drive unix but don't have permission
+
+
+Oracle Integration, File Conversion, File Transger(windows to unix):
+Successfuly implmented. There was some delay in final implementation as initially my approach was different
+
+Rest Api:
+implemented and working fine.
+
+Implementation challanges:
+When I started implmenting all these feature, thought to go with config file with seprate configurations for above use cases
+So that one configuration will serve all the feaures. The users just update configurations as per the requirments and run the utilities
+for file transfer, oracle file load/unload/ rest api, file conversion etc.
+But after our multiple code walkthroughs, the entire code required to be changed. Which causes some delay due to repeated testing.
+
+In summary the challanges I faced due to connections to various entities, which makes delay to deliver the tasks.
+
+ 
